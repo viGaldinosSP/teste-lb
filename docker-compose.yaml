@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  vbt-net:
+    driver: bridge
+
+services:
+  nginx:
+      image: nginx
+      container_name: nginx
+      ports:
+        - 80:80
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+      networks:
+        - vbt-net
+
+  front1:
+    image: 'vbt/front1'
+    container_name: front1
+    restart: 'no'
+    networks:
+      - vbt-net
+    ports:
+      - '3000:3000'
+  
+  front2:
+    image: 'vbt/front2'
+    container_name: front2
+    restart: 'no'
+    networks:
+      - vbt-net
+    ports:
+      - '3001:80'
